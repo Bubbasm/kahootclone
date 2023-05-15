@@ -65,9 +65,16 @@
         <h2 class="text-center"><i class="bi bi-list-ol"></i> Current scores</h2>
         {% if participants|length > 0 %}
             <div class="container p-none text-center">
-                <div id="participants_list" class="text-body-emphasis text-flow">
+                <div id="participants_list" class="text-body-emphasis text-flow row">
                     {% for p in participants %}
-                        <span class="fs-5 fw-bold m-3"><i class="bi bi-person"></i> {{ p.alias }} ({{ p.points }} point{{ p.points|pluralize }})</span>
+                        {% if forloop.counter0 < 10 %}
+                        {% if forloop.counter0|divisibleby:2 %}
+                            <div class="w-100"></div>
+                        {% endif %}
+                        <div class="col-xs col-md">
+                            <span class="fs-5 fw-bold m-3" style="white-space: nowrap;"><i class="bi bi-person"></i> {{ p.alias }} ({{ p.points }} point{{ p.points|pluralize }})</span>
+                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
