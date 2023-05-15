@@ -24,7 +24,7 @@ answerNotExist = "Answer does not exist"
 
 # nombres graciosos en español
 nameCollection = [
-    
+    'ElvisTek',
 ]
 
 
@@ -65,6 +65,8 @@ class ParticipantViewSet(viewsets.ModelViewSet):
         Checks if the alias is already in use
         @author: Samuel de Lucas
         '''
+        if hasattr(request.data, '_mutable'):
+            request.data._mutable = True
         gameID = request.data['game']
         try:
             game = Game.objects.get(publicId=gameID)

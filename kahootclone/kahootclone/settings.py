@@ -51,11 +51,11 @@ INSTALLED_APPS = [
     'restServer',
     'models',
     'services',
-    # 'corsheaders',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    # 'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -169,7 +169,7 @@ else:
 
 GAME_JOIN_URL = os.getenv('GAME_JOIN_URL')
 
-# CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = [
 #     GAME_JOIN_URL,
 # ]
