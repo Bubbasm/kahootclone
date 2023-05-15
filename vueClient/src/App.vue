@@ -8,11 +8,13 @@ document.title = "KahootClone Game"
 </script>
 
 <template class="min-vh-100">
+<div>
   <audio controls loop autoplay hidden>
     <source src="/lobby.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
   <RouterView />
+</div>
 </template>
 
 <style scoped>
