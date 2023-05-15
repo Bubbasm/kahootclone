@@ -1,0 +1,33 @@
+{% load static %}
+
+{% block scripts %}
+{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>
+         {% block title %}{% endblock %} - Kahoot clone
+      </title>
+      <link href="{% static 'css/bootstrap/bootstrap.css' %}" rel="stylesheet">
+      <link href="{% static 'css/style.css' %}" rel="stylesheet">
+      <script src="{% static 'scripts/bootstrap/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'scripts/jquery-3.6.4.min.js' %}" crossorigin="anonymous"></script>
+      <!-- https://stackoverflow.com/a/68650203 -->
+      {{ remainingTime|json_script:'remaining_time' }}
+      <script src="{% static 'scripts/game.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    </head>
+   <body class="d-flex flex-column min-vh-100">
+
+      <main class="d-flex flex-column min-vh-100 container-fluid flex-fill justify-content-center align-items-center">
+         {% block content %} {% endblock %}
+      </main>
+
+      <audio controls loop autoplay hidden>
+         <source src="{% static 'audio/lobby.mp3' %}" type="audio/mpeg">
+         Your browser does not support the audio element.
+      </audio>
+   </body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Questionnaire List{% endblock %}
+{% block content %}
+
+
+{% if user.is_authenticated %}
+    <h1><i class="bi bi-text-left"></i>&nbsp; Questionnaire List</h1>
+    <a href="{% url 'questionnaire-create' %}" class="btn btn-primary my-2"><i class="bi bi-plus"></i>&nbsp; Create Questionnaire</a>
+    <table class="table table-striped">
+      <tr>
+        <th>Questionnaire</th>
+        <th width="15%" class="text-center"># Questions</th>
+        <th width="15%"></th>
+      </tr>
+      {% for questionnaire in questionnaire_list %}
+        <tr>
+          <td class="text-start align-middle"><a href="{{ questionnaire.get_absolute_url }}">{{ questionnaire.title }}</a></td>
+          <td class="text-center align-middle">{{ questionnaire.questions|length }}</td>
+          <td class="text-end">
+            <a href="{% url 'questionnaire-update' questionnaire.id %}" class="btn btn-outline-warning"><i class="bi bi-pencil-fill"></i> &nbsp;Edit</a>
+            <a href="{% url 'questionnaire-remove' questionnaire.id %}" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></i>&nbsp;Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <a href="{% url 'home' %}" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> &nbsp;Back to home</a>
+
+{% endif %}
+{% endblock %}

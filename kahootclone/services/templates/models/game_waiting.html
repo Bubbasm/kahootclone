@@ -1,0 +1,15 @@
+<!-- game.html extends base.html -->
+{% extends "game.html" %}
+{% load static %}
+
+{% block title %}Waiting{% endblock %}
+
+{% block content %}
+    <h1>We will start in</h1>
+    <h1 id="timer"></h1>
+    <h1>seconds</h1>
+    <form id="start_game" method="post" action="{% url 'game-count-down' %}">
+        {% csrf_token %}
+        <input type="hidden" name="start_game" value="true">
+    </form>
+{% endblock %}

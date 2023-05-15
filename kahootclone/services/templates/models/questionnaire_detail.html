@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Questionnaire detail{% endblock %}
+
+{% block content %}
+<h1>Questionnaire Details</h1>
+    {% if user.is_authenticated %}
+        {% if questionnaire.user == user %}
+            <h2>
+                {{ questionnaire.title }}
+                <a class="btn btn-warning my-2" href="{% url 'questionnaire-update' questionnaire.pk %}"><i class="bi bi-pencil-fill"></i> &nbsp;Edit</a>
+                <a class="btn btn-success my-2 float-end" href="{% url 'game-create' questionnaire.pk %}"><i class="bi bi-play-fill"></i> &nbsp;Play</a> 
+            </h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Question</th>
+                    <th width="15%" class="text-center"># Answers</th>
+                    <th width="15%"></th>
+                </tr>
+                {% for question in question_list %}
+                <tr>
+                    <td class="text-start align-middle"><a href="{% url 'question-detail' question.pk %}">{{ question.question }}</a></td>
+                    <td class="text-center align-middle">{{ question.answers|length }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'question-update' question.pk %}" class="btn btn-outline-warning"><i class="bi bi-pencil-fill"></i> &nbsp;Edit</a>
+                        <a href="{% url 'question-remove' question.pk %}" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></i>&nbsp;Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3" class="text-center align-middle color-primary"><a class="align-middle text-decoration-none" href="{% url 'question-create' questionnaire.pk %}">
+                        <i class="bi bi-plus-circle fs-6" title="Add a new question"></i>&nbsp;Add question</a></td>
+                </tr>
+            </table>
+
+            <a href="{% url 'questionnaire-list' %}" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> &nbsp;Back to questionnaire list</a>
+        {% else %}
+            <h1>You are not the owner of this questionnaire</h1>
+        {% endif %}
+    {% else %}
+        <h1>You must be logged in to access this page</h1>
+    {% endif %}
+
+{% endblock %}

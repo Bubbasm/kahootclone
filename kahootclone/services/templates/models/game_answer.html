@@ -1,0 +1,78 @@
+<!-- game.html extends base.html -->
+{% extends "game.html" %}
+{% load static %}
+
+{% block title %}Answer{% endblock %}
+
+{% block content %}
+    <div class="container text-center justify-content-center">
+
+        <h1 class="text-center">{{ question.question }} - Answer</h1>
+        
+        <!-- {% if not answer_list %}
+            <h2 class="text-center">This question had no correct answers</h2>
+        {% elif answer_list|length == 1 %}
+            <h2 class="text-center">The correct answer was: "{{ answer_list|first }}"</h2>
+        {% elif answer_list|length > 1 %}
+            <h2 class="text-center">The correct answers were:  
+                {% for answer in answer_list %}
+                    "{{ answer }}"
+                    {% if not forloop.last %}
+                        ,
+                    {% endif %}
+                {% endfor %}
+            </h2>
+        {% endif %} -->
+        <div class="container" style="height:500px;{% if noneCorrect %}margin-bottom:50px;{% endif %}">
+            {% if answers|length > 0 %}
+                {% if noneCorrect %}
+                    <h2 class="text-secondary m-0">There are no correct answers</h2>
+                {% endif %}
+                <table class="table table-borderless ans-table h-100">
+                    {% for answer in answers %}
+                        {% if forloop.counter0 < 4 %}
+                            {% if forloop.counter0|divisibleby:2 %}
+                                <tr>
+                            {% endif %}
+                            <td class="ans ans-{{ forloop.counter }} text-center align-middle {% if not answer.correct %}ans-disabled{% endif %}" {% if forloop.last and forloop.counter0|divisibleby:2 %}colspan="2"{% endif %}>
+                                <i class="bi bi-{% if forloop.counter == 1 %}triangle{% elif forloop.counter == 2 %}square{% elif forloop.counter == 3 %}hexagon{% else %}circle{% endif %}-fill text-white"></i>
+                                <p>
+                                    {{ answer.answer }}
+                                </p>
+                            </td>
+                            {% if not forloop.counter0|divisibleby:2 or forloop.last %}
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div class="d-flex justify-content-center align-items-center h-100"><h2 class="text-secondary">There were no answers</h2></div>
+            {% endif %}
+        </div>
+
+        <form method="POST" action="{% url 'game-count-down' %}">
+            {% csrf_token %}
+            <button type="submit" value="Submit" class="btn btn-success my-2">
+                {% if leaderboard_next %}
+                <i class="bi bi-trophy-fill"></i>&nbsp; Show leaderboard
+                {% else %}
+                Next question <i class="bi bi-arrow-right"></i>
+                {% endif %}
+            </button>
+        </form>
+        
+        <h2 class="text-center"><i class="bi bi-list-ol"></i> Current scores</h2>
+        {% if participants|length > 0 %}
+            <div class="container p-none text-center">
+                <div id="participants_list" class="text-body-emphasis text-flow">
+                    {% for p in participants %}
+                        <span class="fs-5 fw-bold m-3"><i class="bi bi-person"></i> {{ p.alias }} ({{ p.points }} point{{ p.points|pluralize }})</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <p>There are no participants</p>
+        {% endif %}
+    </div>
+{% endblock %}

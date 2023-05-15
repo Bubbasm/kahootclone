@@ -1,0 +1,35 @@
+<!-- game.html extends base.html -->
+{% extends "game.html" %}
+{% load static %}
+
+{% block title %}Question{% endblock %}
+
+{% block content %}
+    <h1>{{ question.question }}</h1>
+    <h3>Time remaining: <span id="timer"></span>s</h3>
+
+    {% if answers|length == 0 %}
+        <h2 class="m-5 text-secondary">This question has no answers</h2>
+    {% else %}
+        <div class="container" style="height:500px">
+            <table class="table table-borderless ans-table h-100">
+                {% for answer in answers %}
+                    {% if forloop.counter0 < 4 %}
+                        {% if forloop.counter0|divisibleby:2 %}
+                            <tr>
+                        {% endif %}
+                        <td class="ans ans-{{ forloop.counter }} text-center align-middle" {% if forloop.last and forloop.counter0|divisibleby:2 %}colspan="2"{% endif %}>
+                            <i class="bi bi-{% if forloop.counter == 1 %}triangle{% elif forloop.counter == 2 %}square{% elif forloop.counter == 3 %}hexagon{% else %}circle{% endif %}-fill text-white"></i>
+                            <p>
+                                {{ answer.answer }}
+                            </p>
+                        </td>
+                        {% if not forloop.counter0|divisibleby:2 or forloop.last %}
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

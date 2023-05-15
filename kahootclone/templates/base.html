@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>
+         {% block title %}{% endblock %} - Kahoot clone
+      </title>
+      <link href="{% static 'css/bootstrap/bootstrap.css' %}" rel="stylesheet">
+      <link href="{% static 'css/style.css' %}" rel="stylesheet">
+      <script src="{% static 'scripts/bootstrap/bootstrap.bundle.min.js' %}"></script>
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      {% block scripts %}{% endblock %}
+   </head>
+   <body class="d-flex flex-column min-vh-100">
+      {% block header %}
+         <nav class="navbar navbar-expand-lg navbar-light bg-dark p-2">
+            <div class="container-fluid">
+               <a class="navbar-brand text-light" href="{% url 'home' %}"><h1 class="m-0 p-0 kc-logo">KahootClone</h1></a>
+                  {% if user.is_authenticated %}
+                  <div class="align-middle">
+                     <p class="d-inline text-light px-3"><i class="bi bi-person-fill"></i>&nbsp;{{ user.username }}</p>
+                     <a href="{% url 'logout' %}" class="btn btn-danger"> Log Out &nbsp;<i class="bi bi-box-arrow-right"></i></a>
+                  </div>
+                  {% else %}
+                     <div>
+                        <a href="{% url 'login' %}" class="btn btn-success"><i class="bi bi-box-arrow-in-right"></i>&nbsp; Log In</a>
+                        <a href="{% url 'signup' %}" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i>&nbsp; Sign Up</a>
+                     </div>
+                  {% endif %}
+                  <audio controls loop autoplay hidden>
+                     <source src="{% static 'audio/lobby.mp3' %}" type="audio/mpeg">
+                     Your browser does not support the audio element.
+                  </audio>
+            </div>
+         </nav>
+      {% endblock %}
+
+      <main class="container-fluid flex-fill py-5">
+         <div class="container w-100 h-100" style="height:100%">
+            {% block content %} {% endblock %}
+         </div>
+      </main>
+
+      {% block footer %}
+         <footer class="text-center text-lg-start bg-dark">
+            <div class="kc-logo text-center p-3 pb-0">
+               <p> &copy; 2023 - Samuel y Bhavuk</p>
+            </div>
+         </footer>
+      {% endblock %}
+
+
+   </body>
+</html>

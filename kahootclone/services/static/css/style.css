@@ -1,0 +1,108 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+.kc-info {
+    background-color: #cecece!important;
+}
+
+.kc-logo {
+    font-weight: bolder;
+    background: linear-gradient(to right, var(--bs-primary) 0%, var(--bs-info) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ans-table{
+    border-collapse: separate;
+    border-spacing: 1em;
+}
+
+.ans {
+    position: relative;
+    color: white !important;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    height: 40%;
+    width: 50%;
+    border-radius: 15px;
+    box-shadow: 10px 10px 20px -10px #555555 !important;
+}
+
+.ans-disabled {
+    opacity: 30%;
+    box-shadow: unset !important;
+}
+
+.ans > p{
+    position: absolute;
+    z-index: 9999999999999;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+}
+
+.ans > .bi{
+    position: absolute;
+    opacity: 40%;
+    font-size: 500%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.ans > .bi-triangle-fill {
+    transform: translateX(-50%) translateY(-52%);
+}
+
+.ans-1 {
+    background-color: #E21B3C!important;
+}
+
+.ans-2 {
+    background-color: #1368CE!important;
+}
+
+.ans-3 {
+    background-color: #ffa602!important;
+}
+
+.ans-4 {
+    background-color: #26890C!important;
+}
+
+.annimated-1 {
+    animation: 0.6s winner -0.8s infinite alternate ease-out;
+}
+
+.annimated-2 {
+    animation: 0.6s winner -0.4s infinite alternate ease-out;
+}
+
+.annimated-3 {
+    animation: 0.6s winner infinite alternate ease-out;
+}
+
+.leaderboard-1{
+    color: gold;
+}
+
+@keyframes winner {
+    from {
+        font-size: 1em;
+    }
+
+    to {
+        font-size: 1.1em;
+    }
+}
+
+.leaderboard-2{
+    color: silver;
+}
+
+.leaderboard-3{
+    color: #CD7F32;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}

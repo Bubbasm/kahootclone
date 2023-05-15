@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    
+    {% if user.is_authenticated %}
+        {% if questionnaire.user == user %}
+            <!--https://stackoverflow.com/a/68650203 -->
+            {{ update_participant_url|json_script:'update_participant_url' }}
+            {{ game_join_url|json_script:'qr_url' }}
+            {{ pin|json_script:'pin' }}
+            <script src="{% static 'scripts/game_create.js' %}"></script>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}Game{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if questionnaire.user == user %}
+            <div class="row text-center justify-content-center">
+                <div class="col-lg-5 text-center bg-light p-4 m-4 rounded-4">
+                    <div class="container p-none">
+                        <h1>Game: "{{ questionnaire.title }}"</h1>
+                        <h3 class="pt-3">Connect to</h3> 
+                        <h3><a href="{{ game_join_url }}?pin={{ pin }}" class="fw-bold px-3 ">{{ game_join_url }}</a></h3>
+                        <h3>with pin </h3>
+                        <h1><span class="fw-bold">{{ pin }}</span></h1>
+                        <!-- qr code image with responsive width (bootstrap) -->
+                        <div id="qrcode" class="d-flex justify-content-center p-4" style="height: 250px;"></div>
+                        <form method="POST" action="{% url 'game-count-down' %}">
+                            {% csrf_token %}
+                            <button type="submit" value="Submit" class="btn btn-success btn-lg mt-2"><i class="bi bi-rocket-takeoff"></i>&nbsp; Launch game</button>
+                            <input hidden type="text" name="launch" value="true"> 
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center bg-light p-4 m-4 rounded-4">
+                    <div class="container p-none text-center">
+                        <h1><i class="bi bi-people-fill"></i>&nbsp; Participants</h1>
+                        <p>As soon as you log in, your alias will be displayed here.</p>
+                        <table id="participants_list" class="table table-borderless"></table>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <h1>This questionnaire does not belong to logged user</h1>
+        {% endif %}
+    {% else %}
+        <h1>You must be logged in to access this page</h1>
+    {% endif %}
+{% endblock %}

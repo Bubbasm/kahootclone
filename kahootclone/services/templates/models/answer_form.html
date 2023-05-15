@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Answer Create{% endblock %}
+
+{% block content %}
+<h1> 
+{% if isUpdate %}
+    Edit
+{% else %}
+    Create
+{% endif %}
+answer</h1>
+    {% if user.is_authenticated %}
+        {% if question.questionnaire.user == user %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <p>
+                    {{ form.as_p }}
+                </p>
+                {% if back_url %}
+                <a href="{{ back_url }}" class="btn btn-danger">Cancel</a>
+                {% else %}
+                <button type="button" class="btn btn-danger" onclick="window.history.back()">Cancel</button>
+                {% endif %}
+                <input type="submit" value="Submit" class="btn btn-success"/>
+            </form>
+        {% else %}
+            <h1>You are not the owner of this questionnaire</h1>
+        {% endif %}
+    {% else %}
+        <h1>You must be logged in to access this page</h1>
+    {% endif %}
+{% endblock %}

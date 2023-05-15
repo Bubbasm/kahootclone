@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1><i class="bi bi-house"></i>&nbsp; Homepage</h1>
+{% if user.is_authenticated %}
+    <p>
+        Hi {{ user.username }}!
+    </p> 
+
+    <div class="btn-group">
+        <p><a href="{% url 'questionnaire-create' %}" class="btn btn-primary mx-1"><i class="bi bi-plus"></i>&nbsp; Create a Questionnaire</a></p>
+
+        <p><a href="{% url 'questionnaire-list' %}" class="btn btn-outline-primary mx-1"><i class="bi bi-text-left"></i>&nbsp; All Questionnaires</a></p>
+    </div>
+
+    
+    <h2>Your Latest Questionnaires</h2> 
+    <ul class="list">
+        {% for quiz in latest_questionnaire_list %}
+            <li><a href="{% url 'questionnaire-detail' quiz.id %}">{{ quiz.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}" class="btn btn-success"><i class="bi bi-box-arrow-in-right"></i>&nbsp; Log In</a>
+    <a href="{% url 'signup' %}" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i>&nbsp; Sign Up</a>
+{% endif %}
+{% endblock content %}
