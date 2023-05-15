@@ -60,7 +60,7 @@ export default {
       this.error = "";
       axios.post(apiParticipant, {
         game: this.game,
-        // alias: this.alias,
+        alias: this.alias,
       }).then((res) => {
         if (res.status !== undefined && res.status == 201) {
           let uuidp = res.data.uuidP;
