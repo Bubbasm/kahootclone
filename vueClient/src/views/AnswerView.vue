@@ -3,7 +3,7 @@
     <div
       class="container min-vw-100 min-vh-100 position-absolute bg-transparent justify-content-center align-items-center d-flex flex-column ans-container"
       id="animated-bg">
-      <h4 class="">{{ alias }}</h4>
+      <h4 class="text-left">{{ alias }} ({{ points }} {{ $filters.pluralize(points, 'point') }})</h4>
       <h2 id="output-msg" class="fw-bold">&nbsp;{{ outputMsg }}&nbsp;</h2>
 
       <div v-if="answerCount == 0"><h3>There are no answers</h3></div>
@@ -57,6 +57,7 @@ export default {
       alias: sessionStorage.getItem("alias"),
       game: sessionStorage.getItem("game"),
       questionNumber: sessionStorage.getItem("questionNumber"),
+      points: 0,
       timer: null,
       outputMsg: "",
       canClick: true,
