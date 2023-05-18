@@ -1,4 +1,5 @@
 export DJANGOPORT := 8000
+export DJANGOLISTEN := 0.0.0.0
 export DEBUG := True
 # you must update the value of HEROKUHOST
 export HEROKUHOST := git:remote protected-bastion-43256
@@ -29,7 +30,7 @@ ifeq ($(DEBUG),False)
 		@echo "Running in production mode"
 		$(CMD) collectstatic --noinput
 endif
-	$(CMD) runserver $(DJANGOPORT)
+		$(CMD) runserver $(DJANGOLISTEN)":"$(DJANGOPORT)
 
 update_models:
 	$(CMD) makemigrations $(APP)

@@ -120,7 +120,7 @@ class Game(models.Model):
         @author: Bhavuk Sikka
         '''
         if self.publicId == 0:
-            self.publicId = randint(1, 1000000)
+            self.publicId = randint(1, 1000)
         super(Game, self).save()
 
     class ChangeState(Exception):
