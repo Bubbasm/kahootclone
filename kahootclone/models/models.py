@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.urls import reverse
-from random import randint
 from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
-from models.constants import WAITING
+from random import randint
+from .constants import WAITING
 
 
 class User(AbstractUser):
@@ -112,7 +112,7 @@ class Game(models.Model):
         @author: Bhavuk Sikka
         """
         return str(self.questionnaire) + " - " + \
-            str(self.publicId) + " - " + str(self.state)
+            str(self.publicId) + " - " + str(self.state) 
 
     def save(self, *args, **kwargs):
         '''
@@ -120,7 +120,13 @@ class Game(models.Model):
         @author: Bhavuk Sikka
         '''
         if self.publicId == 0:
-            self.publicId = randint(1, 1000)
+            counter = 0
+            while counter < 1000:
+                counter += 1
+                pubId = randint(1, 1000)
+                if not Game.objects.filter(publicId=pubId).exists():
+                    self.publicId = pubId
+                    break
         super(Game, self).save()
 
     class ChangeState(Exception):
